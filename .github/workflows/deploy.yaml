@@ -29,7 +29,7 @@ jobs:
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           user: ${{ secrets.HOSTINGER_USERNAME }}
-          pass: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          pass: ${{ secrets.HOSTINGER_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT }}
           scp: |
             './dist' => /home/u835893703/domains/fullstackbd.com/public_html/sample
