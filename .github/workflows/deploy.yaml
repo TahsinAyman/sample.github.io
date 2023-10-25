@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        run: npm run build
+        run: npm install && npm run build
         shell: bash
       - name: SSH
         uses: ErenKrt/ssh-push@main
