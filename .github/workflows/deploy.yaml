@@ -19,7 +19,7 @@ jobs:
         run: npm install && npm run build
         shell: bash
       - name: Set up SSH key
-        run: echo '${{secrets.HOSTINGER_PRIVATE_KEY}} > ~/.hostinger'
+        run: echo '${{secrets.HOSTINGER_PRIVATE_KEY}} > .hostinger'
       - name: Transfer the 'dist' folder to the remote server
-        run: scp -i ~/.hostinger -r -P ${{ secrets.HOSTINGER_PORT }} ./dist ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/home/u835893703/domains/fullstackbd.com/public_html/sample
+        run: scp -i .hostinger -r -P ${{ secrets.HOSTINGER_PORT }} ./dist ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/home/u835893703/domains/fullstackbd.com/public_html/sample
   
