@@ -13,21 +13,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
       - name: Build
-        run: npm run build
+        run: npm install && npm run build
         shell: bash
-      - name: SSH
-        uses: ErenKrt/ssh-push@main
-        with:
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          PORT: ${{ secrets.HOSTINGER_PORT }} 
-          USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
-          PRIVATE_KEY:  ${{ secrets.HOSTINGER_PRIVATE_KEY }}
-          SOURCE: "dist/"
-          OUTDIR: "/home/u835893703/domains/fullstackbd.com/public_html/sample"
-          #exclude: |
-          #  *.exe
-          #scripts: |
-          #  cd /home/eren/test && unzip myZipname.zip && rm -r *.zip
-          #  cat /home/eren/test/index.js
-          #zipname: "myZipname.zip"
+      - name: Set up SSH key
+        run: echo '${{secrets.HOSTINGER_PRIVATE_KEY}} > ~/.hostinger'
+      - name: Transfer the 'dist' folder to the remote server
+        run: scp -i ~/.hostinger -r -P ${{ secrets.HOSTINGER_PORT }} ./dist ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/home/u835893703/domains/fullstackbd.com/public_html/sample
+  
