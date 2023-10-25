@@ -18,18 +18,10 @@ jobs:
       - name: Build
         run: npm install && npm run build
         shell: bash
-      - name: SSH
-        uses: ErenKrt/ssh-push@main
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          username: ${{ secrets.HOSTINGER_USERNAME }}
-          private_key:  ${{ secrets.HOSTINGER_PRIVATE_KEY }}
-          source: "dist/"
-          outdir: "/home/u835893703/domains/fullstackbd.com/public_html/sample"
-          #exclude: |
-          #  *.exe
-          #scripts: |
-          #  cd /home/eren/test && unzip myZipname.zip && rm -r *.zip
-          #  cat /home/eren/test/index.js
-          #zipname: "myZipname.zip"
+          ssh-private-key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+      - name: Transfer the 'dist' folder to the remote server
+        run: scp -r -P ${{ secrets.HOSTINGER_PORT }} ./dist ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:/home/u835893703/domains/fullstackbd.com/public_html/sample
+  
