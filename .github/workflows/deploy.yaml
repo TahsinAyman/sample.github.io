@@ -13,7 +13,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - id: build-publish
-        uses: bitovi/github-actions-react-to-github-pages@v1.2.0
+      - name: Build
+        run: npm run build
+        shell: bash
+      - name: SSH
+        uses: ErenKrt/ssh-push@main
         with:
-          path: dist # change to your build folder
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }} 
+          USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          PRIVATE_KEY:  ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          SOURCE: "dist/"
+          OUTDIR: "/home/u835893703/domains/fullstackbd.com/public_html/sample"
+          #exclude: |
+          #  *.exe
+          #scripts: |
+          #  cd /home/eren/test && unzip myZipname.zip && rm -r *.zip
+          #  cat /home/eren/test/index.js
+          #zipname: "myZipname.zip"
