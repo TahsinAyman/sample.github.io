@@ -1,13 +1,8 @@
-name: Deploy to Github Pages
+name: Deploy
 on:
   push:
     branches:
       - "release"
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
@@ -32,5 +27,5 @@ jobs:
           pass: ${{ secrets.HOSTINGER_PASSWORD }}
           port: ${{ secrets.HOSTINGER_PORT }}
           scp: |
-            './dist/*' => /home/u835893703/domains/fullstackbd.com/public_html/sample
+            './dist/fullstackademy/*' => /home/u835893703/domains/fullstackbd.com/public_html/academy
       
